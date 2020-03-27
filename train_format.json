@@ -1,0 +1,11 @@
+{
+    "data" : [
+        {"message" : "text", 
+            "votes" :
+            {
+                "id" : "number", 
+                "vote" : "number"
+            }
+        }
+    ]
+}
