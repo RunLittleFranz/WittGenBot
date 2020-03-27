@@ -21,12 +21,12 @@ end
 data = load_json
 Telegram::Bot::Client.run(token) do |bot|
     bot.listen do |message|
-        if message.text.nil?
+        if message.text.nil? 
             next
         end
         if message.text =~ /^\/start/
             bot.api.send_message(chat_id: message.chat.id, text: "So tornato pe finì quello che ho iniziato.\nOra aiutami a ricostruire il linguaggio.")
-        elsif (message.text.match(/^\/vote\s+\d{1,4}/) != nil)
+        elsif (message.text.match(/^\/vote\s+\d{1,4}/) != nil && message.chat.id.abs == 1456570721)
 
             mtc = message.text.match(/^\/vote\s+\d{1,4}/)
             vote = mtc[0].split(' ')[1].to_f
