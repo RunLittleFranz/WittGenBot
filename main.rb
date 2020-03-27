@@ -3,7 +3,7 @@ require 'json'
 require_relative 'Mex.rb'
 require_relative 'Vote.rb'
 
-token = "979324278:AAH5q-DpT7fqgJR8ffoVIsXtAJzY2UoweZo"
+token = File.read(token.key)
 
 def load_json
     cont = File.read("train.json")
