@@ -26,7 +26,7 @@ Telegram::Bot::Client.run(token) do |bot|
         end
         if message.text =~ /^\/start/
             bot.api.send_message(chat_id: message.chat.id, text: "So tornato pe finì quello che ho iniziato.\nOra aiutami a ricostruire il linguaggio.")
-        elsif (message.text.match(/^\/vote\s+\d{1,4}/) != nil && message.chat.id.abs == 1456570721)
+        elsif (message.text.match(/^\/vote\s+\d{1,4}/) != nil)
 
             mtc = message.text.match(/^\/vote\s+\d{1,4}/)
             vote = mtc[0].split(' ')[1].to_f
@@ -49,21 +49,21 @@ Telegram::Bot::Client.run(token) do |bot|
                         if found 
                             mx = Mex.from_json data[j]
                             mx.votes.each.with_index do |v, i|
-                                if(v.id == msg.from.id)
+                                if(v.id == message.from.id)
                                     allowed = false
-                                    mx.votes[i] = Vote.new(msg.from.id, vote, message.from.username)
+                                    mx.votes[i] = Vote.new(message.from.id, vote, message.from.username)
                                     data[j] = mx.to_hash
                                     bot.api.send_message(chat_id: message.chat.id, text: "Non credevo fossi un tipo da 'Cambiare idea è possibile'.")
                                 end
                             end
                             if allowed
                                 mx = Mex.from_json data[j]
-                                mx << Vote.new(msg.from.id, vote, message.from.username)
+                                mx << Vote.new(message.from.id, vote, message.from.username)
                                 data[j] = mx.to_hash
                             end
                         else
                             mx = Mex.new(msg.text, msg.message_id, [])
-                            mx << Vote.new(msg.from.id, vote, message.from.username)
+                            mx << Vote.new(message.from.id, vote, message.from.username)
                             data << mx.to_hash
                         end
                         bot.api.send_message(chat_id: message.chat.id, text: "Grazie per il tuo sforzo.\nFarò tesoro di questo parere.") if allowed
